@@ -1,1 +1,2 @@
 rootProject.name = 'SagaChoreography'
+include ('order-service', 'payment-service', 'common', 'stock-service')
