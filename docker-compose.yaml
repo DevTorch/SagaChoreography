@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  saga-choreography-order-service:
+    image: postgres:latest
+    container_name: saga-choreography-order-service
+    restart: always
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_USER=${ORDER_SERVICE_DB_USER}
+      - POSTGRES_PASSWORD=${ORDER_SERVICE_DB_PASSWORD}
+      - POSTGRES_DB=${ORDER_SERVICE_DB_NAME}
+    volumes:
+      - ./postgres:/var/lib/postgresql-order/data
+#      - ./z-docker/initCommandDB.sql:/docker-entrypoint-initdb.d/initCommandDB.sql
+    env_file: ".env"
+
+  saga-choreography-payment-service:
+    image: postgres:latest
+    container_name: saga-choreography-payment-service
+    restart: always
+    ports:
+      - "5434:5432"
+    environment:
+      - POSTGRES_USER=${PAYMENT_SERVICE_DB_USER}
+      - POSTGRES_PASSWORD=${PAYMENT_SERVICE_DB_PASSWORD}
+      - POSTGRES_DB=${PAYMENT_SERVICE_DB_NAME}
+    volumes:
+      - ./postgres:/var/lib/postgresql-payment/data
+#      - ./z-docker/initQueryDB.sql:/docker-entrypoint-initdb.d/initQueryDB.sql
+    env_file: ".env"
+
+  saga-choreography-stock-service:
+    image: postgres:latest
+    container_name: saga-choreography-stock-service
+    restart: always
+    ports:
+      - "5434:5432"
+    environment:
+      - POSTGRES_USER=${STOCK_SERVICE_DB_USER}
+      - POSTGRES_PASSWORD=${STOCK_SERVICE_DB_PASSWORD}
+      - POSTGRES_DB=${STOCK_SERVICE_DB_NAME}
+    volumes:
+      - ./postgres:/var/lib/postgresql-stock/data
+    #      - ./z-docker/initQueryDB.sql:/docker-entrypoint-initdb.d/initQueryDB.sql
+    env_file: ".env"

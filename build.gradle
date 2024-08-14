@@ -58,6 +58,17 @@ subprojects {
         implementation "org.mapstruct:mapstruct:${mapstructVersion}"
         annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
 
+        implementation 'org.springframework.boot:spring-boot-starter-validation'
+        implementation 'commons-validator:commons-validator:1.9.0'
+
+        implementation 'org.springframework.modulith:spring-modulith-starter-core'
+        implementation 'org.springframework.modulith:spring-modulith-starter-jpa'
+        implementation 'io.hypersistence:hypersistence-utils-hibernate-63:3.8.2'
+        implementation 'org.javamoney:moneta:1.4.4'
+
+        implementation 'org.liquibase:liquibase-core'
+        runtimeOnly 'org.springframework.boot:spring-boot-docker-compose'
+
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
         testImplementation 'io.projectreactor:reactor-test'
         testImplementation 'org.springframework.cloud:spring-cloud-stream-test-binder'
