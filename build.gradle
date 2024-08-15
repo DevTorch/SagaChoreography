@@ -61,8 +61,8 @@ subprojects {
         implementation 'org.springframework.boot:spring-boot-starter-validation'
         implementation 'commons-validator:commons-validator:1.9.0'
 
-        implementation 'org.springframework.modulith:spring-modulith-starter-core'
-        implementation 'org.springframework.modulith:spring-modulith-starter-jpa'
+//        implementation 'org.springframework.modulith:spring-modulith-starter-core'
+//        implementation 'org.springframework.modulith:spring-modulith-starter-jpa'
         implementation 'io.hypersistence:hypersistence-utils-hibernate-63:3.8.2'
         implementation 'org.javamoney:moneta:1.4.4'
 
