@@ -1,0 +1,12 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: stock-service
+  config:
+    import: optional:file:.env[.properties]
+  docker:
+    compose:
+      file: ../docker-compose.yml
+      lifecycle-management: start_only
