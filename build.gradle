@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.3.2'
+    id 'org.springframework.boot' version '3.3.3'
     id 'io.spring.dependency-management' version '1.1.6'
 }
 
@@ -49,8 +49,8 @@ subprojects {
         implementation 'org.springframework.boot:spring-boot-starter'
         implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
         implementation 'org.springframework.boot:spring-boot-starter-webflux'
-        implementation 'org.springframework.cloud:spring-cloud-stream'
-        implementation 'org.springframework.cloud:spring-cloud-stream-binder-kafka'
+//        implementation 'org.springframework.cloud:spring-cloud-stream'
+//        implementation 'org.springframework.cloud:spring-cloud-stream-binder-kafka'
         implementation 'org.springframework.kafka:spring-kafka'
 
         implementation 'org.projectlombok:lombok'
@@ -61,8 +61,6 @@ subprojects {
         implementation 'org.springframework.boot:spring-boot-starter-validation'
         implementation 'commons-validator:commons-validator:1.9.0'
 
-//        implementation 'org.springframework.modulith:spring-modulith-starter-core'
-//        implementation 'org.springframework.modulith:spring-modulith-starter-jpa'
         implementation 'io.hypersistence:hypersistence-utils-hibernate-63:3.8.2'
         implementation 'org.javamoney:moneta:1.4.4'
 
@@ -71,7 +69,6 @@ subprojects {
 
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
         testImplementation 'io.projectreactor:reactor-test'
-        testImplementation 'org.springframework.cloud:spring-cloud-stream-test-binder'
         testImplementation 'org.springframework.kafka:spring-kafka-test'
         testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     }
