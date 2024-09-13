@@ -6,7 +6,7 @@ services:
     container_name: saga-choreography-order-service
     restart: always
     ports:
-      - "5433:5432"
+      - "6433:5432"
     environment:
       - POSTGRES_USER=${ORDER_SERVICE_DB_USER}
       - POSTGRES_PASSWORD=${ORDER_SERVICE_DB_PASSWORD}
@@ -21,7 +21,7 @@ services:
     container_name: saga-choreography-payment-service
     restart: always
     ports:
-      - "5434:5432"
+      - "6434:5432"
     environment:
       - POSTGRES_USER=${PAYMENT_SERVICE_DB_USER}
       - POSTGRES_PASSWORD=${PAYMENT_SERVICE_DB_PASSWORD}
@@ -36,7 +36,7 @@ services:
     container_name: saga-choreography-stock-service
     restart: always
     ports:
-      - "5434:5432"
+      - "6435:5432"
     environment:
       - POSTGRES_USER=${STOCK_SERVICE_DB_USER}
       - POSTGRES_PASSWORD=${STOCK_SERVICE_DB_PASSWORD}
@@ -45,3 +45,108 @@ services:
       - ./postgres:/var/lib/postgresql-stock/data
     #      - ./z-docker/initQueryDB.sql:/docker-entrypoint-initdb.d/initQueryDB.sql
     env_file: ".env"
+
+  saga-choreography-delivery-service:
+    image: postgres:latest
+    container_name: saga-choreography-delivery-service
+    restart: always
+    ports:
+      - "6436:5432"
+    environment:
+      - POSTGRES_USER=${DELIVERY_SERVICE_DB_USER}
+      - POSTGRES_PASSWORD=${DELIVERY_SERVICE_DB_PASSWORD}
+      - POSTGRES_DB=${DELIVERY_SERVICE_DB_NAME}
+    volumes:
+      - ./postgres:/var/lib/postgresql-delivery/data
+    #      - ./z-docker/initQueryDB.sql:/docker-entrypoint-initdb.d/initQueryDB.sql
+    env_file: ".env"
+
+  saga-choreography-kafka-server-1:
+    image: bitnami/kafka:latest
+    ports:
+      - "9092:9092"
+    environment:
+      - KAFKA_CFG_NODE_ID=1
+      - KAFKA_KRAFT_CLUSTER_ID=SagaChoreographyApp_Cluster
+      - KAFKA_CFG_PROCESS_ROLES=controller,broker
+      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@saga-choreography-kafka-server-1:9091,2@saga-choreography-kafka-server-2:9091,3@saga-choreography-kafka-server-3:9091,4@saga-choreography-kafka-server-4:9091,5@saga-choreography-kafka-server-5:9091
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9090,CONTROLLER://:9091,EXTERNAL://:9092
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka-server-1:9090,EXTERNAL://${HOSTNAME:-localhost}:9092
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,EXTERNAL:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
+      - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=PLAINTEXT
+    volumes:
+      - ./kafka-server/kraft/kafka-server-1/data:/bitnami/kafka/data
+      - ./kafka-server/kraft/kafka-server-1/logs:/bitnami/kafka/logs
+
+  saga-choreography-kafka-server-2:
+    image: bitnami/kafka:latest
+    ports:
+      - "9094:9094"
+    environment:
+      - KAFKA_CFG_NODE_ID=2
+      - KAFKA_KRAFT_CLUSTER_ID=SagaChoreographyApp_Cluster
+      - KAFKA_CFG_PROCESS_ROLES=controller,broker
+      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@saga-choreography-kafka-server-1:9091,2@saga-choreography-kafka-server-2:9091,3@saga-choreography-kafka-server-3:9091,4@saga-choreography-kafka-server-4:9091,5@saga-choreography-kafka-server-5:9091
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9090,CONTROLLER://:9091,EXTERNAL://:9094
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka-server-1:9092,EXTERNAL://${HOSTNAME:-localhost}:9094
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,EXTERNAL:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
+      - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=PLAINTEXT
+    volumes:
+      - ./kafka-server/kraft/kafka-server-2/data:/bitnami/kafka/data
+      - ./kafka-server/kraft/kafka-server-2/logs:/bitnami/kafka/logs
+
+  saga-choreography-kafka-server-3:
+    image: bitnami/kafka:latest
+    ports:
+      - "9096:9096"
+    environment:
+      - KAFKA_CFG_NODE_ID=3
+      - KAFKA_KRAFT_CLUSTER_ID=SagaChoreographyApp_Cluster
+      - KAFKA_CFG_PROCESS_ROLES=controller,broker
+      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@saga-choreography-kafka-server-1:9091,2@saga-choreography-kafka-server-2:9091,3@saga-choreography-kafka-server-3:9091,4@saga-choreography-kafka-server-4:9091,5@saga-choreography-kafka-server-5:9091
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9090,CONTROLLER://:9091,EXTERNAL://:9096
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka-server-3:9090,EXTERNAL://${HOSTNAME:-localhost}:9096
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,EXTERNAL:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
+      - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=PLAINTEXT
+    volumes:
+      - ./kafka-server/kraft/kafka-server-3/data:/bitnami/kafka/data
+      - ./kafka-server/kraft/kafka-server-3/logs:/bitnami/kafka/logs
+
+  saga-choreography-kafka-server-4:
+    image: bitnami/kafka:latest
+    ports:
+      - "9098:9098"
+    environment:
+      - KAFKA_CFG_NODE_ID=4
+      - KAFKA_KRAFT_CLUSTER_ID=SagaChoreographyApp_Cluster
+      - KAFKA_CFG_PROCESS_ROLES=controller,broker
+      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@saga-choreography-kafka-server-1:9091,2@saga-choreography-kafka-server-2:9091,3@saga-choreography-kafka-server-3:9091,4@saga-choreography-kafka-server-4:9091,5@saga-choreography-kafka-server-5:9091
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9090,CONTROLLER://:9091,EXTERNAL://:9098
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka-server-4:9090,EXTERNAL://${HOSTNAME:-localhost}:9098
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,EXTERNAL:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
+      - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=PLAINTEXT
+    volumes:
+      - ./kafka-server/kraft/kafka-server-4/data:/bitnami/kafka/data
+      - ./kafka-server/kraft/kafka-server-4/logs:/bitnami/kafka/logs
+
+  saga-choreography-kafka-server-5:
+    image: bitnami/kafka:latest
+    ports:
+      - "9100:9100"
+    environment:
+      - KAFKA_CFG_NODE_ID=5
+      - KAFKA_KRAFT_CLUSTER_ID=SagaChoreographyApp_Cluster
+      - KAFKA_CFG_PROCESS_ROLES=controller,broker
+      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@saga-choreography-kafka-server-1:9091,2@saga-choreography-kafka-server-2:9091,3@saga-choreography-kafka-server-3:9091,4@saga-choreography-kafka-server-4:9091,5@saga-choreography-kafka-server-5:9091
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9090,CONTROLLER://:9091,EXTERNAL://:9100
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka-server-4:9090,EXTERNAL://${HOSTNAME:-localhost}:9100
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,EXTERNAL:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
+      - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=PLAINTEXT
+    volumes:
+      - ./kafka-server/kraft/kafka-server-5/data:/bitnami/kafka/data
+      - ./kafka-server/kraft/kafka-server-5/logs:/bitnami/kafka/logs
