@@ -17,6 +17,7 @@ import java.util.Set;
  */
 public record OrderResponseDto(
         OrderId id,
+        Long customerId,
         Set<OrderItemResponseDto> orderItemId,
         @Digits(integer = 10, fraction = 2)
         BigDecimal totalAmount,

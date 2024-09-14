@@ -10,7 +10,6 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Version;
 import jakarta.validation.constraints.Digits;
 import lombok.AllArgsConstructor;
@@ -20,7 +19,6 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.proxy.HibernateProxy;
-import org.springframework.util.Assert;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -40,10 +38,6 @@ public class Order {
 
     @Column(name = "customer_id")
     private Long customerId;
-
-    @ManyToOne
-    @JoinColumn(name = "customer_ordersid")
-    private CustomerOrders customerOrders;
 
     @ManyToMany
     @JoinTable(name = "orders_items",
@@ -66,24 +60,6 @@ public class Order {
 
     @Enumerated(value = EnumType.STRING)
     private PaymentStatusEnum paymentStatus;
-
-    public Order(
-            Set<OrderItem> orderItemId,
-            BigDecimal totalAmount,
-            LocalDate orderDate,
-            LocalDateTime lastUpdateDate,
-            OrderStatusEnum orderStatus,
-            PaymentStatusEnum paymentStatus) {
-
-        Assert.notNull(orderItemId, "orderItemId must not be null");
-        this.orderItemId = orderItemId;
-        Assert.notNull(totalAmount, "totalAmount must not be null");
-        this.totalAmount = totalAmount;
-        this.orderDate = orderDate;
-        this.lastUpdateDate = lastUpdateDate;
-        this.orderStatus = orderStatus;
-        this.paymentStatus = paymentStatus;
-    }
 
     @Override
     public final boolean equals(Object o) {

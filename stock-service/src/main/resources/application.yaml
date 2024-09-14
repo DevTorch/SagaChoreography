@@ -8,5 +8,5 @@ spring:
     import: optional:file:.env[.properties]
   docker:
     compose:
-      file: ../docker-compose.yml
+      file: docker-compose.yaml
       lifecycle-management: start_only
