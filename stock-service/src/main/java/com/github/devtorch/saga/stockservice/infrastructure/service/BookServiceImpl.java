@@ -1,15 +1,20 @@
 package com.github.devtorch.saga.stockservice.infrastructure.service;
 
+import com.github.devtorch.saga.stockservice.domain.Book;
 import com.github.devtorch.saga.stockservice.domain.BookId;
 import com.github.devtorch.saga.stockservice.domain.dto.BookRequestDto;
 import com.github.devtorch.saga.stockservice.domain.dto.BookResponseDto;
 import com.github.devtorch.saga.stockservice.domain.mapper.StockServiceDtoMapper;
 import com.github.devtorch.saga.stockservice.infrastructure.BookRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -26,6 +31,13 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    @Transactional
+    public List<BookResponseDto> addBooksMany(List<BookRequestDto> dtos) {
+        var books = bookRepository.saveAll(dtos.stream().map(stockServiceDtoMapper::toBookEntity).toList());
+        return books.stream().map(stockServiceDtoMapper::bookToBookResponseDto).collect(Collectors.toList());
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public Optional<BookResponseDto> getBookById(BookId id) {
         var book = bookRepository.findBookById(id);
@@ -36,5 +48,12 @@ public class BookServiceImpl implements BookService {
     @Transactional(readOnly = true)
     public Boolean isBookAvailable(BookId bookId) {
         return Optional.ofNullable(bookRepository.findBookById(bookId)).isPresent();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<BookResponseDto> getList(Pageable pageable) {
+        Page<Book> books = bookRepository.findAll(pageable);
+        return books.map(stockServiceDtoMapper::bookToBookResponseDto);
     }
 }
