@@ -29,6 +29,9 @@ public class BookController {
     @GetMapping(value = "/{id}", produces = "application/json")
     public ResponseEntity<BookResponseDto> getBookById(@PathVariable("id") BookId id) {
         return ResponseEntity.ok(bookService.getBookById(id)
+
+                //TODO Add Exception and error handling
+
                 .orElseThrow(() -> new RuntimeException("Book not found")));
     }
 }
