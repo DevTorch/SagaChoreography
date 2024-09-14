@@ -5,6 +5,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,6 +28,8 @@ public class Book {
     @AttributeOverride(name = "value", column = @Column(name = "ISBN"))
     private Isbn isbn;
     private BigDecimal cost;
+    @Min(1)
+    private Integer quantity;
 
     public Book(String title, String author, Isbn isbn, BigDecimal cost) {
         Assert.notNull(title, "title must not be null");

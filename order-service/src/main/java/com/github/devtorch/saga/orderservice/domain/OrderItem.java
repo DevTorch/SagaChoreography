@@ -1,11 +1,14 @@
 package com.github.devtorch.saga.orderservice.domain;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.validation.constraints.Digits;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,13 +28,17 @@ public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private Long id;
-    private Long productStockId;
     private String productTitle;
     private Integer quantity;
+    @Digits(integer = 10, fraction = 2)
     private BigDecimal price;
+
+    @Column(name = "order_id")
     @ManyToMany
-    @JoinTable(name = "orders_orderitems")
-    private List<Order> orders;
+    @JoinTable(name = "orders_items",
+            joinColumns = @JoinColumn(name = "orderItem_id"),
+            inverseJoinColumns = @JoinColumn(name = "order_id"))
+    private List<Order> orderId;
 
     @Override
     public final boolean equals(Object o) {

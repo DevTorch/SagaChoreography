@@ -2,6 +2,8 @@ package com.github.devtorch.saga.stockservice.domain;
 
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,7 +23,10 @@ public class MobileDevice {
     private String brand;
     private String model;
     private String mobileOs;
+    @Digits(integer = 10, fraction = 2)
     private BigDecimal cost;
+    @Min(1)
+    private Integer quantity;
 
     public MobileDevice(String brand, String model, String mobileOs, BigDecimal cost) {
         Assert.notNull(brand, "brand must not be null");
