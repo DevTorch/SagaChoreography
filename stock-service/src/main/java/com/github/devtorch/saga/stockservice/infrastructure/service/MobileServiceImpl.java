@@ -1,7 +1,6 @@
 package com.github.devtorch.saga.stockservice.infrastructure.service;
 
 import com.github.devtorch.saga.stockservice.domain.MobileDevice;
-import com.github.devtorch.saga.stockservice.domain.MobileDeviceId;
 import com.github.devtorch.saga.stockservice.domain.dto.MobileRequestDto;
 import com.github.devtorch.saga.stockservice.domain.dto.MobileResponseDto;
 import com.github.devtorch.saga.stockservice.domain.mapper.StockServiceDtoMapper;
@@ -14,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -40,7 +40,7 @@ public class MobileServiceImpl implements MobileService {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<MobileResponseDto> getMobileDeviceById(MobileDeviceId id) {
+    public Optional<MobileResponseDto> getMobileDeviceById(UUID id) {
         var mobileDevice = mobileDeviceRepository.findMobileDeviceById(id);
         return Optional.ofNullable(mobileDevice).map(stockServiceDtoMapper::toMobileResponseDto);
     }
@@ -54,7 +54,7 @@ public class MobileServiceImpl implements MobileService {
 
     @Override
     @Transactional(readOnly = true)
-    public Boolean isMobileAvailable(MobileDeviceId mobileDeviceId) {
+    public Boolean isMobileAvailable(UUID mobileDeviceId) {
         return Optional.ofNullable(mobileDeviceRepository.findMobileDeviceById(mobileDeviceId)).isPresent();
     }
 }

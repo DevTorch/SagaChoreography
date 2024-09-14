@@ -1,7 +1,6 @@
 package com.github.devtorch.saga.stockservice.infrastructure.service;
 
 import com.github.devtorch.saga.stockservice.domain.Book;
-import com.github.devtorch.saga.stockservice.domain.BookId;
 import com.github.devtorch.saga.stockservice.domain.dto.BookRequestDto;
 import com.github.devtorch.saga.stockservice.domain.dto.BookResponseDto;
 import com.github.devtorch.saga.stockservice.domain.mapper.StockServiceDtoMapper;
@@ -14,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,14 +39,14 @@ public class BookServiceImpl implements BookService {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<BookResponseDto> getBookById(BookId id) {
+    public Optional<BookResponseDto> getBookById(UUID id) {
         var book = bookRepository.findBookById(id);
         return Optional.ofNullable(book).map(stockServiceDtoMapper::bookToBookResponseDto);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Boolean isBookAvailable(BookId bookId) {
+    public Boolean isBookAvailable(UUID bookId) {
         return Optional.ofNullable(bookRepository.findBookById(bookId)).isPresent();
     }
 

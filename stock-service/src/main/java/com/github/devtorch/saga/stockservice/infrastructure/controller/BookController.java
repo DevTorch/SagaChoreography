@@ -1,6 +1,5 @@
 package com.github.devtorch.saga.stockservice.infrastructure.controller;
 
-import com.github.devtorch.saga.stockservice.domain.BookId;
 import com.github.devtorch.saga.stockservice.domain.dto.BookRequestDto;
 import com.github.devtorch.saga.stockservice.domain.dto.BookResponseDto;
 import com.github.devtorch.saga.stockservice.infrastructure.service.BookService;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/books")
@@ -31,7 +31,7 @@ public class BookController {
     }
 
     @GetMapping(value = "/{id}", produces = "application/json")
-    public ResponseEntity<BookResponseDto> getBookById(@PathVariable("id") BookId id) {
+    public ResponseEntity<BookResponseDto> getBookById(@PathVariable("id") UUID id) {
         return ResponseEntity.ok(bookService.getBookById(id)
 
                 //TODO Add Exception and error handling

@@ -1,6 +1,5 @@
 package com.github.devtorch.saga.stockservice.infrastructure.controller;
 
-import com.github.devtorch.saga.stockservice.domain.MobileDeviceId;
 import com.github.devtorch.saga.stockservice.domain.dto.MobileRequestDto;
 import com.github.devtorch.saga.stockservice.domain.dto.MobileResponseDto;
 import com.github.devtorch.saga.stockservice.infrastructure.service.MobileService;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/mobile")
@@ -26,7 +26,7 @@ public class MobileDevicesController {
     private final MobileService mobileDeviceService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<MobileResponseDto> getOne(@PathVariable MobileDeviceId id) {
+    public ResponseEntity<MobileResponseDto> getOne(@PathVariable UUID id) {
         var mobileDevice = mobileDeviceService.getMobileDeviceById(id);
         return mobileDevice.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }

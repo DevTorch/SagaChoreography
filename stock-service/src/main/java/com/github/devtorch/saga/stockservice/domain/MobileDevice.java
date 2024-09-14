@@ -1,7 +1,9 @@
 package com.github.devtorch.saga.stockservice.domain;
 
-import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
@@ -11,6 +13,7 @@ import lombok.Setter;
 import org.springframework.util.Assert;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -18,12 +21,13 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Entity
 public class MobileDevice {
-    @EmbeddedId
-    private MobileDeviceId id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
     private String brand;
     private String model;
     private String mobileOs;
-    @Digits(integer = 10, fraction = 2)
+    @Digits(integer = 19, fraction = 2)
     private BigDecimal cost;
     @Min(1)
     private Integer quantity;

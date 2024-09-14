@@ -1,14 +1,13 @@
 package com.github.devtorch.saga.stockservice.domain.dto;
 
-import com.github.devtorch.saga.stockservice.domain.BookId;
-
 import java.math.BigDecimal;
+import java.util.UUID;
 
 /**
  * DTO for {@link com.github.devtorch.saga.stockservice.domain.Book}
  */
 public record BookResponseDto(
-        BookId id,
+        UUID id,
         String title,
         String author,
         String isbn,

@@ -21,6 +21,4 @@ public interface StockServiceDtoMapper {
 
     @Mapping(target = "id", ignore = true)
     MobileDevice toMobileDeviceEntity(MobileRequestDto mobileRequestDto);
-
-    MobileDevice toEntity(MobileResponseDto mobileResponseDto);
 }

@@ -64,7 +64,6 @@ subprojects {
         implementation 'io.hypersistence:hypersistence-utils-hibernate-63:3.8.2'
         implementation 'org.javamoney:moneta:1.4.4'
 
-        implementation 'org.liquibase:liquibase-core'
         runtimeOnly 'org.springframework.boot:spring-boot-docker-compose'
 
         testImplementation 'org.springframework.boot:spring-boot-starter-test'

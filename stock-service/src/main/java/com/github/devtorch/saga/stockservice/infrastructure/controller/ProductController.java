@@ -2,8 +2,6 @@ package com.github.devtorch.saga.stockservice.infrastructure.controller;
 
 import com.github.devtorch.saga.common.dto.ProductRequestDto;
 import com.github.devtorch.saga.common.enums.ProductTypeEnum;
-import com.github.devtorch.saga.stockservice.domain.BookId;
-import com.github.devtorch.saga.stockservice.domain.MobileDeviceId;
 import com.github.devtorch.saga.stockservice.infrastructure.service.BookService;
 import com.github.devtorch.saga.stockservice.infrastructure.service.MobileService;
 import lombok.RequiredArgsConstructor;
@@ -26,13 +24,11 @@ public class ProductController {
 
         if (productRequestDto.productType().equals(ProductTypeEnum.BOOK)) {
 
-            BookId bookId = new BookId(productRequestDto.productId());
-            return bookService.isBookAvailable(bookId);
+            return bookService.isBookAvailable(productRequestDto.productId());
 
         } else if (productRequestDto.productType().equals(ProductTypeEnum.MOBILE)) {
 
-            MobileDeviceId mobileDeviceId = new MobileDeviceId(productRequestDto.productId());
-            return mobileService.isMobileAvailable(mobileDeviceId);
+            return mobileService.isMobileAvailable(productRequestDto.productId());
 
         } else {
             return false;

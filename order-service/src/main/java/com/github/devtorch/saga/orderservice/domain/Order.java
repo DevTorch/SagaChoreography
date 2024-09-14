@@ -7,9 +7,7 @@ import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Version;
 import jakarta.validation.constraints.Digits;
 import lombok.AllArgsConstructor;
@@ -39,11 +37,8 @@ public class Order {
     @Column(name = "customer_id")
     private Long customerId;
 
-    @ManyToMany
-    @JoinTable(name = "orders_items",
-            joinColumns = @JoinColumn(name = "order_id"),
-            inverseJoinColumns = @JoinColumn(name = "orderItem_id"))
-    private Set<OrderItem> orderItemId = new LinkedHashSet<>();
+    @OneToMany
+    private Set<OrderItem> orderItems = new LinkedHashSet<>();
 
     @Digits(integer = 10, fraction = 2)
     private BigDecimal totalAmount;
