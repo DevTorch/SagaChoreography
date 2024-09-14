@@ -12,5 +12,5 @@ public record OrderItemResponseDto(
         String productTitle,
         Integer quantity,
         @Digits(integer = 10, fraction = 2)
-        BigDecimal price) {
+        BigDecimal cost) {
 }

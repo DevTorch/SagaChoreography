@@ -31,7 +31,7 @@ public class OrderItem {
     private String productTitle;
     private Integer quantity;
     @Digits(integer = 10, fraction = 2)
-    private BigDecimal price;
+    private BigDecimal cost;
 
     @Column(name = "order_id")
     @ManyToMany

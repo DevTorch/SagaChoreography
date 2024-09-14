@@ -12,4 +12,5 @@ public interface BookService {
 
     Optional<BookResponseDto> getBookById(BookId id);
 
+    Boolean isBookAvailable(BookId bookId);
 }

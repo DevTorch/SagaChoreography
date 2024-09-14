@@ -10,6 +10,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Version;
 import jakarta.validation.constraints.Digits;
 import lombok.AllArgsConstructor;
@@ -38,6 +39,12 @@ public class Order {
     private OrderId id;
 
     @Column(name = "customer_id")
+    private Long customerId;
+
+    @ManyToOne
+    @JoinColumn(name = "customer_ordersid")
+    private CustomerOrders customerOrders;
+
     @ManyToMany
     @JoinTable(name = "orders_items",
             joinColumns = @JoinColumn(name = "order_id"),

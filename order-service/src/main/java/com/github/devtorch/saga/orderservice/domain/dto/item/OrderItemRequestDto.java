@@ -13,5 +13,5 @@ public record OrderItemRequestDto(
         String productTitle,
         @Min(1) @Positive Integer quantity,
         @Digits(integer = 10, fraction = 2)
-        BigDecimal price) {
+        BigDecimal cost) {
 }
