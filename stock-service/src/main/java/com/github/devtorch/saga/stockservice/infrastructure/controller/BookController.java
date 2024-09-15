@@ -45,7 +45,7 @@ public class BookController {
     }
 
     @PostMapping("/bulk")
-    public ResponseEntity<List<BookResponseDto>> addManyBooks(@RequestBody @Valid List<BookRequestDto> dtos) {
+    public ResponseEntity<List<BookResponseDto>> addManyBooks(@RequestBody List<BookRequestDto> dtos) {
         return ResponseEntity.ok(bookService.addBooksMany(dtos));
     }
 }

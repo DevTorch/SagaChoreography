@@ -1,4 +1,4 @@
-package com.github.devtorch.saga.stockservice.infrastructure;
+package com.github.devtorch.saga.stockservice.infrastructure.repository;
 
 import com.github.devtorch.saga.stockservice.domain.MobileDevice;
 import org.springframework.data.jpa.repository.JpaRepository;

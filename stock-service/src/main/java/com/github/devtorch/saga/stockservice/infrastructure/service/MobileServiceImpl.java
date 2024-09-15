@@ -4,7 +4,7 @@ import com.github.devtorch.saga.stockservice.domain.MobileDevice;
 import com.github.devtorch.saga.stockservice.domain.dto.MobileRequestDto;
 import com.github.devtorch.saga.stockservice.domain.dto.MobileResponseDto;
 import com.github.devtorch.saga.stockservice.domain.mapper.StockServiceDtoMapper;
-import com.github.devtorch.saga.stockservice.infrastructure.MobileDeviceRepository;
+import com.github.devtorch.saga.stockservice.infrastructure.repository.MobileDeviceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

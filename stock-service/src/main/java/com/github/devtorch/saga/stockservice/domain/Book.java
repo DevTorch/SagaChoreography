@@ -12,7 +12,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.validator.constraints.ISBN;
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -31,7 +30,7 @@ public class Book {
 
     private String author;
 
-    @ISBN
+//    @ISBN
     @AttributeOverride(name = "value", column = @Column(name = "ISBN"))
     private String isbn;
 

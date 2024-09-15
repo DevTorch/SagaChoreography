@@ -4,7 +4,26 @@ server:
 spring:
   application:
     name: order-service
+  config:
+    import: optional:file:.env[.properties]
 
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.yaml
-    enabled: false
+    enabled: true
+  jpa:
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    generate-ddl: true
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: r2dbc:postgresql://localhost:6433/${ORDER_SERVICE_DB_NAME}
+    username: ${ORDER_SERVICE_DB_USER}
+    password: ${ORDER_SERVICE_DB_PASSWORD}
+  data:
+    jpa:
+      repositories:
+        enabled: true

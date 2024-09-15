@@ -4,7 +4,7 @@ import com.github.devtorch.saga.stockservice.domain.Book;
 import com.github.devtorch.saga.stockservice.domain.dto.BookRequestDto;
 import com.github.devtorch.saga.stockservice.domain.dto.BookResponseDto;
 import com.github.devtorch.saga.stockservice.domain.mapper.StockServiceDtoMapper;
-import com.github.devtorch.saga.stockservice.infrastructure.BookRepository;
+import com.github.devtorch.saga.stockservice.infrastructure.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
