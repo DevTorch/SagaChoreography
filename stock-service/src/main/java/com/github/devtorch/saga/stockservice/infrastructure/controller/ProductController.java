@@ -24,11 +24,11 @@ public class ProductController {
 
         if (productRequestDto.productType().equals(ProductTypeEnum.BOOK)) {
 
-            return bookService.isBookAvailable(productRequestDto.productId());
+            return bookService.isBookAvailable(productRequestDto.productId(), productRequestDto.quantity());
 
         } else if (productRequestDto.productType().equals(ProductTypeEnum.MOBILE)) {
 
-            return mobileService.isMobileAvailable(productRequestDto.productId());
+            return mobileService.isMobileAvailable(productRequestDto.productId(), productRequestDto.quantity());
 
         } else {
             return false;

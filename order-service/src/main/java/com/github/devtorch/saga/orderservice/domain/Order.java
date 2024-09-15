@@ -3,11 +3,13 @@ package com.github.devtorch.saga.orderservice.domain;
 import com.github.devtorch.saga.common.enums.OrderStatusEnum;
 import com.github.devtorch.saga.common.enums.PaymentStatusEnum;
 import jakarta.persistence.Column;
-import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Version;
 import jakarta.validation.constraints.Digits;
 import lombok.AllArgsConstructor;
@@ -21,9 +23,7 @@ import org.hibernate.proxy.HibernateProxy;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.LinkedHashSet;
 import java.util.Objects;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -31,16 +31,19 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 public class Order {
-    @EmbeddedId
-    private OrderId id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(name = "customer_id")
     private Long customerId;
 
-    @OneToMany
-    private Set<OrderItem> orderItems = new LinkedHashSet<>();
+//    @OneToMany
+//    private Set<OrderItem> orderItems = new LinkedHashSet<>();
+    @OneToOne
+    private OrderItem orderItem;
 
-    @Digits(integer = 10, fraction = 2)
+    @Digits(integer = 19, fraction = 2)
     private BigDecimal totalAmount;
 
     @CreationTimestamp
@@ -69,6 +72,6 @@ public class Order {
 
     @Override
     public final int hashCode() {
-        return Objects.hash(id);
+        return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
     }
 }

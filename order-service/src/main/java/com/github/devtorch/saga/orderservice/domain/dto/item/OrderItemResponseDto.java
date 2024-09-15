@@ -1,6 +1,7 @@
 package com.github.devtorch.saga.orderservice.domain.dto.item;
 
 import com.github.devtorch.saga.common.enums.ProductTypeEnum;
+import com.github.devtorch.saga.orderservice.domain.Order;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Positive;
@@ -16,6 +17,7 @@ public record OrderItemResponseDto(
         UUID stockId,
         ProductTypeEnum productType,
         @Min(1) @Positive Integer quantity,
-        @Digits(integer = 10, fraction = 2)
-        BigDecimal cost) {
+        @Digits(integer = 19, fraction = 2)
+        BigDecimal cost,
+        Order orderId) {
 }

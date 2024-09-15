@@ -16,6 +16,6 @@ public record OrderItemRequestDto(
         @NotNull UUID stockId,
         @NotNull ProductTypeEnum productType,
         @Min(1) @Positive Integer quantity,
-        @Digits(integer = 10, fraction = 2)
+        @Digits(integer = 19, fraction = 2)
         BigDecimal cost) {
 }

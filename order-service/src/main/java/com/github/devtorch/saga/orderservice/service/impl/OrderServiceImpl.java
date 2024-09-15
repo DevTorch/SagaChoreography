@@ -10,8 +10,6 @@ import com.github.devtorch.saga.orderservice.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
@@ -25,23 +23,20 @@ public class OrderServiceImpl implements OrderService {
     public OrderResponseDto createNewOrder(CreateNewOrderDto orderRequestDto) {
 
         var order = orderRepository.save(orderDtoMapper.toOrderEntity(orderRequestDto));
+        var item = orderRequestDto.orderItem();
 
-        List<ProductRequestDto> productRequestDtos = orderRequestDto.orderItems().stream()
-                .map(orderItemRequestDto -> ProductRequestDto.builder()
-                        .productId(orderItemRequestDto.stockId())
-                        .productType(orderItemRequestDto.productType())
-                        .quantity(orderItemRequestDto.quantity())
-                        .build())
-                .toList();
+        ProductRequestDto productRequestDto = new ProductRequestDto(
+                item.stockId(),
+                item.productType(),
+                item.quantity()
+        );
 
         //TODO Call StockServiceClient
 
-        /*for (ProductRequestDto productRequestDto : productRequestDtos) {
-            if (!stockServiceClient.isProductAvailable(productRequestDto)) {
-                order.getOrderItems().removeIf(orderItem -> orderItem.getStockId().equals(productRequestDto.productId()));
-                throw new RuntimeException("Product not available");
-            }
-        }*/
+        var check = stockServiceClient.isProductAvailable(productRequestDto);
+
+        //TODO Если true, проверяем количество, апдейтим статус заказа, апдейтим стоки. Если false – фейлим
+
 
         return orderDtoMapper.toOrderResponseDto(order);
 

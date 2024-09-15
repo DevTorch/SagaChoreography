@@ -54,7 +54,8 @@ public class MobileServiceImpl implements MobileService {
 
     @Override
     @Transactional(readOnly = true)
-    public Boolean isMobileAvailable(UUID mobileDeviceId) {
-        return Optional.ofNullable(mobileDeviceRepository.findMobileDeviceById(mobileDeviceId)).isPresent();
+    public Boolean isMobileAvailable(UUID mobileDeviceId, Integer quantity) {
+        return mobileDeviceRepository.findMobileDeviceById(mobileDeviceId) != null
+                && mobileDeviceRepository.findMobileDeviceById(mobileDeviceId).getQuantity() >= quantity;
     }
 }

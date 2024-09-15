@@ -15,6 +15,7 @@ public interface OrderItemMapper {
 
     Set<OrderItemRequestDto> toOrderItemRequestDtoSet(Set<OrderItem> orderItems);
 
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "orderId", ignore = true)
-    OrderItem toOrderItemEntity(OrderItemResponseDto orderItemResponseDto);
+    OrderItem toOrderItemEntity(OrderItemRequestDto orderItemRequestDto);
 }

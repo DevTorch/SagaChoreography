@@ -16,7 +16,7 @@ public interface BookService {
 
     Optional<BookResponseDto> getBookById(UUID id);
 
-    Boolean isBookAvailable(UUID bookId);
+    Boolean isBookAvailable(UUID bookId, Integer quantity);
 
     List<BookResponseDto> addBooksMany(@Valid List<BookRequestDto> dtos);
 

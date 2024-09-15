@@ -46,8 +46,10 @@ public class BookServiceImpl implements BookService {
 
     @Override
     @Transactional(readOnly = true)
-    public Boolean isBookAvailable(UUID bookId) {
-        return Optional.ofNullable(bookRepository.findBookById(bookId)).isPresent();
+    public Boolean isBookAvailable(UUID bookId, Integer quantity) {
+
+        return bookRepository.findBookById(bookId) != null
+               && bookRepository.findBookById(bookId).getQuantity() >= quantity;
     }
 
     @Override

@@ -14,7 +14,7 @@ public interface MobileService {
 
     Optional<MobileResponseDto> getMobileDeviceById(UUID id);
 
-    Boolean isMobileAvailable(UUID mobileDeviceId);
+    Boolean isMobileAvailable(UUID mobileDeviceId, Integer quantity);
 
     Page<MobileResponseDto> getList(Pageable pageable);
 
