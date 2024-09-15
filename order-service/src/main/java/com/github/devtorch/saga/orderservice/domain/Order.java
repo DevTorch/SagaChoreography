@@ -7,9 +7,7 @@ import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Version;
 import jakarta.validation.constraints.Digits;
 import lombok.AllArgsConstructor;
@@ -19,7 +17,6 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.proxy.HibernateProxy;
-import org.springframework.util.Assert;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -38,11 +35,10 @@ public class Order {
     private OrderId id;
 
     @Column(name = "customer_id")
-    @ManyToMany
-    @JoinTable(name = "orders_items",
-            joinColumns = @JoinColumn(name = "order_id"),
-            inverseJoinColumns = @JoinColumn(name = "orderItem_id"))
-    private Set<OrderItem> orderItemId = new LinkedHashSet<>();
+    private Long customerId;
+
+    @OneToMany
+    private Set<OrderItem> orderItems = new LinkedHashSet<>();
 
     @Digits(integer = 10, fraction = 2)
     private BigDecimal totalAmount;
@@ -59,24 +55,6 @@ public class Order {
 
     @Enumerated(value = EnumType.STRING)
     private PaymentStatusEnum paymentStatus;
-
-    public Order(
-            Set<OrderItem> orderItemId,
-            BigDecimal totalAmount,
-            LocalDate orderDate,
-            LocalDateTime lastUpdateDate,
-            OrderStatusEnum orderStatus,
-            PaymentStatusEnum paymentStatus) {
-
-        Assert.notNull(orderItemId, "orderItemId must not be null");
-        this.orderItemId = orderItemId;
-        Assert.notNull(totalAmount, "totalAmount must not be null");
-        this.totalAmount = totalAmount;
-        this.orderDate = orderDate;
-        this.lastUpdateDate = lastUpdateDate;
-        this.orderStatus = orderStatus;
-        this.paymentStatus = paymentStatus;
-    }
 
     @Override
     public final boolean equals(Object o) {
