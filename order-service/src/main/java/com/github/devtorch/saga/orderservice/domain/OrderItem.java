@@ -8,7 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.Digits;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -40,7 +40,7 @@ public class OrderItem {
     @Digits(integer = 19, fraction = 2)
     private BigDecimal cost;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "order_id")
     private Order orderId;
 

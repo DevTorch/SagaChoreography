@@ -9,7 +9,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Version;
 import jakarta.validation.constraints.Digits;
 import lombok.AllArgsConstructor;
@@ -23,6 +23,7 @@ import org.hibernate.proxy.HibernateProxy;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 @Getter
@@ -40,8 +41,8 @@ public class Order {
 
 //    @OneToMany
 //    private Set<OrderItem> orderItems = new LinkedHashSet<>();
-    @OneToOne
-    private OrderItem orderItem;
+    @OneToMany
+    private List<OrderItem> orderItem;
 
     @Digits(integer = 19, fraction = 2)
     private BigDecimal totalAmount;

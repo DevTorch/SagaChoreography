@@ -1,6 +1,6 @@
 rootProject.name = 'SagaChoreography'
 include 'common'
+include 'delivery-service'
 include 'order-service'
 include 'payment-service'
 include 'stock-service'
-include 'delivery-service'

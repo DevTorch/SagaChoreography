@@ -9,6 +9,9 @@ import com.github.devtorch.saga.orderservice.repository.OrderRepository;
 import com.github.devtorch.saga.orderservice.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -20,25 +23,33 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
+    @Transactional
     public OrderResponseDto createNewOrder(CreateNewOrderDto orderRequestDto) {
 
         var order = orderRepository.save(orderDtoMapper.toOrderEntity(orderRequestDto));
-        var item = orderRequestDto.orderItem();
+        var items = orderRequestDto.orderItem();
 
-        ProductRequestDto productRequestDto = new ProductRequestDto(
+        var products = items.stream().map(item -> new ProductRequestDto(
                 item.stockId(),
                 item.productType(),
                 item.quantity()
-        );
+        )).toList();
 
         //TODO Call StockServiceClient
 
-        var check = stockServiceClient.isProductAvailable(productRequestDto);
+        for (ProductRequestDto productRequestDto : products) {
+            stockServiceClient.isProductAvailable(productRequestDto);
+        }
 
         //TODO Если true, проверяем количество, апдейтим статус заказа, апдейтим стоки. Если false – фейлим
 
 
         return orderDtoMapper.toOrderResponseDto(order);
+    }
 
+    @Override
+    @Transactional(readOnly = true)
+    public List<OrderResponseDto> getList() {
+        return orderRepository.findAll().stream().map(orderDtoMapper::toOrderResponseDto).toList();
     }
 }

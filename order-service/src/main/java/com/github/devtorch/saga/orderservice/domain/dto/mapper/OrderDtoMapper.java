@@ -1,6 +1,9 @@
 package com.github.devtorch.saga.orderservice.domain.dto.mapper;
 
 import com.github.devtorch.saga.orderservice.domain.Order;
+import com.github.devtorch.saga.orderservice.domain.OrderItem;
+import com.github.devtorch.saga.orderservice.domain.dto.item.OrderItemRequestDto;
+import com.github.devtorch.saga.orderservice.domain.dto.item.OrderItemResponseDto;
 import com.github.devtorch.saga.orderservice.domain.dto.order.CreateNewOrderDto;
 import com.github.devtorch.saga.orderservice.domain.dto.order.OrderResponseDto;
 import org.mapstruct.Mapper;
@@ -19,4 +22,14 @@ public interface OrderDtoMapper {
     Order toOrderEntity(CreateNewOrderDto createNewOrderDto);
 
     OrderResponseDto toOrderResponseDto(Order order);
+
+    OrderItemResponseDto toOrderItemResponseDto(OrderItem orderItem);
+
+//    List<OrderItemResponseDto> toOrderItemResponseDtoList(List<OrderItem> orderItems);
+//
+//    List<OrderItem> toOrderItemEntityList(List<OrderItemRequestDto> orderItemRequestDtos);
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "orderId", ignore = true)
+    OrderItem toOrderItemEntity(OrderItemRequestDto orderItemRequestDto);
 }
