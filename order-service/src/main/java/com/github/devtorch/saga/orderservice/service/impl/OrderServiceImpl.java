@@ -27,7 +27,7 @@ public class OrderServiceImpl implements OrderService {
     public OrderResponseDto createNewOrder(CreateNewOrderDto orderRequestDto) {
 
         var order = orderRepository.save(orderDtoMapper.toOrderEntity(orderRequestDto));
-        var items = orderRequestDto.orderItem();
+        var items = orderRequestDto.orderItems();
 
         var products = items.stream().map(item -> new ProductRequestDto(
                 item.stockId(),
@@ -36,6 +36,10 @@ public class OrderServiceImpl implements OrderService {
         )).toList();
 
         //TODO Call StockServiceClient
+
+        /* Producer (Supplier) – публикует события,
+           Consumer (Consumer) – считывает события,
+           Processor (Function<T, R>) – считывает, обрабатывает события и переправляет в другой топик. */
 
         for (ProductRequestDto productRequestDto : products) {
             stockServiceClient.isProductAvailable(productRequestDto);

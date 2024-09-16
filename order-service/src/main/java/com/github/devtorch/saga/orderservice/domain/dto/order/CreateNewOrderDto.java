@@ -10,7 +10,7 @@ import java.util.List;
  * DTO for {@link com.github.devtorch.saga.orderservice.domain.Order}
  */
 public record CreateNewOrderDto(
-        List<OrderItemRequestDto> orderItem,
+        List<OrderItemRequestDto> orderItems,
         OrderStatusEnum orderStatus,
         PaymentStatusEnum paymentStatus) {
 }

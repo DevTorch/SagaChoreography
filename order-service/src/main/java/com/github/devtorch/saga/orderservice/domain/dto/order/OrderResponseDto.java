@@ -17,7 +17,7 @@ import java.util.List;
 public record OrderResponseDto(
         Long id,
         Long customerId,
-        List<OrderItemResponseDto> orderItem,
+        List<OrderItemResponseDto> orderItems,
         @Digits(integer = 19, fraction = 2)
         BigDecimal totalAmount,
         LocalDate orderDate,

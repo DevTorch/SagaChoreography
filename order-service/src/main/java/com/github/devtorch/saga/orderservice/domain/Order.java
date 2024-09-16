@@ -42,7 +42,7 @@ public class Order {
 //    @OneToMany
 //    private Set<OrderItem> orderItems = new LinkedHashSet<>();
     @OneToMany
-    private List<OrderItem> orderItem;
+    private List<OrderItem> orderItems;
 
     @Digits(integer = 19, fraction = 2)
     private BigDecimal totalAmount;

@@ -25,10 +25,6 @@ public interface OrderDtoMapper {
 
     OrderItemResponseDto toOrderItemResponseDto(OrderItem orderItem);
 
-//    List<OrderItemResponseDto> toOrderItemResponseDtoList(List<OrderItem> orderItems);
-//
-//    List<OrderItem> toOrderItemEntityList(List<OrderItemRequestDto> orderItemRequestDtos);
-
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "orderId", ignore = true)
     OrderItem toOrderItemEntity(OrderItemRequestDto orderItemRequestDto);

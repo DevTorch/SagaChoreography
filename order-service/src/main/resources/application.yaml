@@ -7,6 +7,22 @@ spring:
   config:
     import: optional:file:.env[.properties]
 
+  cloud:
+    stream:
+      bindings:
+        output:
+          destination: order-service.order.created.topic
+        input:
+          destination: payment-service.payment.status.exchange.topic
+      kafka:
+        binder:
+          brokers:
+            - localhost:9092
+            - localhost:9094
+            - localhost:9096
+            - localhost:9098
+            - localhost:9100
+
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.yaml
     enabled: true

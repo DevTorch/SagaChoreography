@@ -1,6 +1,16 @@
+server:
+  port: 8083
 spring:
   application:
     name: payment-service
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.yaml
     enabled: false
+
+  cloud:
+    stream:
+      bindings:
+        input:
+          destination: order-service.order.created.topic
+        output:
+          destination: payment-service.payment.status.exchange.topic
